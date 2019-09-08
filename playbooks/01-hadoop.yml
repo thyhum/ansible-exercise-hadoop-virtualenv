@@ -1,0 +1,9 @@
+---
+- name: 
+  hosts: hosts_hadoop
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - include_role:
+        name: hadoop

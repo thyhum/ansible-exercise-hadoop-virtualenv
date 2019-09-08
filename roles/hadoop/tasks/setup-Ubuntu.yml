@@ -1,0 +1,7 @@
+---
+- name: Package - jdk_packages
+  apt:
+    name: "{{ item }}"
+    cache_valid_time: 43200 # 12 hours
+    state: present
+  loop: "{{ jdk_packages }}"

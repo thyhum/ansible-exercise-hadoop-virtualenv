@@ -1,0 +1,32 @@
+---
+- name: Stat output folder
+  stat:
+    path: "{{ hadoop_dir }}/output"
+  register: hadoop_output_dir
+
+- when: not hadoop_output_dir.stat.exists
+  block:
+  - name: Create input dir
+    file:
+        path:  "{{ hadoop_dir }}/input"
+        state: directory
+        group: root
+        owner: root
+
+  - name: Get xml files to copy
+    find: 
+      paths: "{{ hadoop_dir }}/etc/hadoop"
+      patterns: "*.xml"
+    register: xml_files_to_copy
+
+  - name: Copy xml files to input dir
+    copy: 
+      src:        "{{ item.path }}"
+      dest:       "{{ hadoop_dir }}/input"
+      remote_src: yes
+    with_items: "{{ xml_files_to_copy.files }}"
+
+  - name: Run mapreduce grep
+    shell: bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.3.jar grep input output 'dfs[a-z.]+'
+    args:
+      chdir: "{{ hadoop_dir }}"

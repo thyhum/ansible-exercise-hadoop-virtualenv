@@ -1,0 +1,7 @@
+---
+- name: Package - venv_packages
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+  become: yes
+  loop: "{{ venv_packages }}"

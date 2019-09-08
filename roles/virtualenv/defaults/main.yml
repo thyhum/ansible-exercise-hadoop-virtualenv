@@ -1,0 +1,19 @@
+---
+virtualenv_dir: "{{ ansible_user_dir }}/py3"
+virtualenv_python: /usr/bin/python3
+virtualenv_command: /usr/bin/virtualenv
+virtualenv_requirements: 
+  file: /tmp/virtualenv_requirements.txt
+  content: |
+    numpy==1.15.0
+    scipy==1.1.0
+    pandas==0.24.2
+    pyspark==2.4.0
+    python-dateutil==2.8.0
+    scikit-learn==0.21.2
+    networkx==2.3
+    nltk==3.2.4
+    tensorflow==1.9.0
+    xgboost==0.81
+    GraphFrames==0.6.0
+    matplotlib==2.0.2

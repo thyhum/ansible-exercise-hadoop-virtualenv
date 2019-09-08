@@ -1,0 +1,3 @@
+---
+- name: reload hadoop yarn
+  shell: "{{ hadoop_dir }}/sbin/stop-yarn.sh; {{ hadoop_dir }}/sbin/start-yarn.sh"

@@ -1,0 +1,7 @@
+---
+venv_packages:
+  - epel-release
+  - python36
+  - python-virtualenv
+  - python-setuptools
+  

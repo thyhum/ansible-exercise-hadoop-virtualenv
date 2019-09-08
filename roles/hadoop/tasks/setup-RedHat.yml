@@ -1,0 +1,6 @@
+---
+- name: Package - jdk_packages
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+  loop: "{{ jdk_packages }}"

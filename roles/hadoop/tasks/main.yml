@@ -1,0 +1,18 @@
+---
+# Variables
+- name: Include Variables - OS {{ ansible_os_family }}
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup
+- name: Include Task - Setup RedHat
+  include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Include Task - Setup Ubuntu
+  include_tasks: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include_tasks: ssh-key.yml
+- include_tasks: hadoop-install.yml
+- include_tasks: hadoop-configure.yml
+- include_tasks: hadoop-yarn.yml

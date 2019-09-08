@@ -1,0 +1,32 @@
+---
+# Variables
+- name: Include Variables - distro 
+  include_vars: "{{ ansible_distribution }}.yml"
+
+# Setup
+- name: Include Task - Setup RedHat
+  include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Include Task - Setup Ubuntu
+  include_tasks: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+# pip install requirements.txt
+- name: Create {{ virtualenv_requirements.file }} file
+  copy:
+      dest: "{{ virtualenv_requirements.file }}"
+      content: "{{ virtualenv_requirements.content }}"
+
+- name: pip install requirements.txt
+  pip:
+    virtualenv: "{{ virtualenv_dir }}"
+    virtualenv_python: "{{ virtualenv_python }}"
+    virtualenv_command: "{{ virtualenv_command }}"
+    requirements: "{{ virtualenv_requirements.file }}"
+
+- name: Remove {{ virtualenv_requirements.file }} file
+  file:
+      path: "{{ virtualenv_requirements.file }}"
+      state: absent
+

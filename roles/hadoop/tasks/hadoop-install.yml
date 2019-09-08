@@ -1,0 +1,39 @@
+---
+- name: Stat of hadoop binary
+  stat:
+    path: "{{ hadoop_dir }}/bin/hadoop"
+  register: hadoop_bin
+
+- block:
+  - name: Download apache hadoop {{ hadoop_version }}
+    get_url:
+      url:  '{{ hadoop_url }}'
+      dest: "{{ hadoop_archive_file }}"
+
+  - name: Extract apache hadoop {{ hadoop_version }}
+    unarchive:
+      src:        "{{ hadoop_archive_file }}"
+      dest:       "{{ hadoop_parent_dir }}"
+      creates:    "{{ hadoop_dir }}"
+      owner:      root
+      group:      root
+      remote_src: yes
+
+  - name: Remove archive file apache hadoop {{ hadoop_version }}
+    file:
+      path:  "{{ hadoop_archive_file }}"
+      state: absent
+
+  - name: Create link hadoop to {{ hadoop-name }}
+    file:
+      src:   "{{ hadoop_dir }}"
+      dest:  "{{ hadoop_parent_dir }}/hadoop"
+      state: link
+    
+  - name: Update JAVA_HOME
+    lineinfile:
+        path: "{{ hadoop_dir }}/etc/hadoop/hadoop-env.sh"
+        insertafter: "# export JAVA_HOME="
+        line: "export JAVA_HOME=/usr"
+
+  when: not hadoop_bin.stat.exists

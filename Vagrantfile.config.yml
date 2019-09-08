@@ -1,0 +1,20 @@
+vms:
+- name:       centos
+  box:        centos/7
+  autostart:  true
+  primary:    true
+  ssh_port:   64221
+
+- name:       ubuntu
+  box:        ubuntu/bionic64
+  autostart:  true
+  primary:    true
+  ssh_port:   64222
+
+# - name:       fedora
+#   box:        fedora/30-cloud-base
+#   # autostart:  true
+#   # primary:    true
+#   ssh_port:   64223
+
+

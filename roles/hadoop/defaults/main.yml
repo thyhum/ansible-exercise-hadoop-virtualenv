@@ -1,0 +1,7 @@
+---
+hadoop_version: 3.0.3
+hadoop_name: hadoop-{{ hadoop_version }}
+hadoop_url: https://archive.apache.org/dist/hadoop/core/{{ hadoop_name }}/{{ hadoop_name }}.tar.gz
+hadoop_archive_file: /tmp/{{ hadoop_name }}.tar.gz
+hadoop_parent_dir: /opt
+hadoop_dir: "{{ hadoop_parent_dir }}/{{ hadoop_name }}"

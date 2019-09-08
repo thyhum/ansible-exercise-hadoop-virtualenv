@@ -1,0 +1,12 @@
+# This place is where you put hosts and variables for Vagrant Environment
+
+[hosts_vagrant]
+centos  ansible_host=127.0.0.1 ansible_port=64221
+ubuntu  ansible_host=127.0.0.1 ansible_port=64222
+fedora  ansible_host=127.0.0.1 ansible_port=64223
+
+[hosts_virtualenv]
+centos
+
+[hosts_hadoop:children]
+hosts_vagrant

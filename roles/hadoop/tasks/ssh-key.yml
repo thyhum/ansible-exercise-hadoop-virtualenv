@@ -1,0 +1,21 @@
+---
+- name: Stat output folder
+  stat:
+    path: "~/.ssh/id_rsa"
+  register: ssh_key_file
+
+- when: not ssh_key_file.stat.exists
+  block:
+  - name: Create id_rsa ssh key
+    command: ssh-keygen -t rsa -N "" -C "Hadoop" -f '~/.ssh/id_rsa'
+
+  - name: SSH authorized_keys
+    shell: "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys"
+
+  - name: Chmod authorized_keys
+    command: chmod 0600 ~/.ssh/authorized_keys
+
+  - name: Disable StrictHostKeyChecking
+    copy:
+      dest: "~/.ssh/config"
+      content: StrictHostKeyChecking no
